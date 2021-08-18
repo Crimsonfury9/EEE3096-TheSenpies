@@ -32,8 +32,8 @@ void CleanUp(int sig){
 
 	//Set LED to low then input mode
 	//Logic here
-  void digitalWrite (23, 0) ;
-  void pinMode (23, INPUT) ;
+  digitalWrite (23, 0) ;
+  pinMode (23, INPUT) ;
 
 	for (int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++) {
 		pinMode(BTNS[j],INPUT);
@@ -57,7 +57,7 @@ void initGPIO(void){
 	
 	//Set up the LED
 	//Write your Logic here
-  void pinMode (23, OUTPUT) 
+  pinMode (23, OUTPUT) 
 	
 	printf("LED and RTC done\n");
 	
@@ -106,14 +106,14 @@ int main(void){
     secs = getSecs();
 		//Toggle Seconds LED
 		//Write your logic here
-		void digitalWrite (23, 1) 
+		digitalWrite (23, 1) 
 		// Print out the time we have stored on our RTC
 		printf("The current time is: %d:%d:%d\n", hours, mins, secs);
 
 		//using a delay to make our program "less CPU hungry"
 		delay(1000); //milliseconds
 
-    void digitalWrite (23, 0)
+    digitalWrite (23, 0)
 	}
 	return 0;
 }
@@ -204,7 +204,7 @@ void hourInc(void){
 		//Write hours back to the RTC
     hours = getHours();
     hours += 1;
-    hours = hFormat(hours)
+    hours = hFormat(hours);
 	}
 	lastInterruptTime = interruptTime;
 }

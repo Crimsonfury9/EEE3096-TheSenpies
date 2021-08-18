@@ -32,7 +32,8 @@ void CleanUp(int sig){
 
 	//Set LED to low then input mode
 	//Logic here
-
+  void digitalWrite (23, 0) ;
+  void pinMode (23, INPUT) ;
 
 	for (int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++) {
 		pinMode(BTNS[j],INPUT);
@@ -56,7 +57,7 @@ void initGPIO(void){
 	
 	//Set up the LED
 	//Write your Logic here
-
+  void pinMode (23, OUTPUT) 
 	
 	printf("LED and RTC done\n");
 	
@@ -68,8 +69,13 @@ void initGPIO(void){
 	
 	//Attach interrupts to Buttons
 	//Write your logic here
-	
+	if (digitalRead(5) == 1) {
+    hourInc()
+  }
 
+  if (digitalRead(30) == 1) {
+    minInc()
+  }
 
 	printf("BTNS done\n");
 	printf("Setup done\n");
@@ -94,15 +100,20 @@ int main(void){
 	for (;;){
 		//Fetch the time from the RTC
 		//Write your logic here
-		
+		getCurrentTime();
+    hours = getHours();
+    mins = getMins();
+    secs = getSecs();
 		//Toggle Seconds LED
 		//Write your logic here
-		
+		void digitalWrite (23, 1) 
 		// Print out the time we have stored on our RTC
 		printf("The current time is: %d:%d:%d\n", hours, mins, secs);
 
 		//using a delay to make our program "less CPU hungry"
 		delay(1000); //milliseconds
+
+    void digitalWrite (23, 0)
 	}
 	return 0;
 }
@@ -191,6 +202,9 @@ void hourInc(void){
 		//Fetch RTC Time
 		//Increase hours by 1, ensuring not to overflow
 		//Write hours back to the RTC
+    hours = getHours();
+    hours += 1;
+    hours = hFormat(hours)
 	}
 	lastInterruptTime = interruptTime;
 }
@@ -209,6 +223,13 @@ void minInc(void){
 		//Fetch RTC Time
 		//Increase minutes by 1, ensuring not to overflow
 		//Write minutes back to the RTC
+    mins = getMins();
+    mins += 1;
+    if (mins >= 60)
+    {
+      mins -= 60
+    }
+    
 	}
 	lastInterruptTime = interruptTime;
 }

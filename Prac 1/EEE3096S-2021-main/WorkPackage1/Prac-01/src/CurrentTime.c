@@ -1,28 +1,34 @@
 #include "CurrentTime.h"
 #include <time.h>
 
-int HH,MM,SS;
+int HH, MM, SS;
 
-void getCurrentTime(void){
-  time_t rawtime;
-  struct tm * timeinfo;
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
+void getCurrentTime(void)
+{
+    time_t rawtime;
+    struct tm *timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
 
-  HH = timeinfo ->tm_hour;
-  MM = timeinfo ->tm_min;
-  SS = timeinfo ->tm_sec;
+    HH = timeinfo->tm_hour;
+    MM = timeinfo->tm_min;
+    SS = timeinfo->tm_sec;
 }
 
-int getHours(void){
+int getHours(void)
+{
     getCurrentTime();
     return HH;
 }
 
-int getMins(void){
+int getMins(void)
+{
+    getCurrentTime();
     return MM;
 }
 
-int getSecs(void){
+int getSecs(void)
+{
+    getCurrentTime();
     return SS;
 }

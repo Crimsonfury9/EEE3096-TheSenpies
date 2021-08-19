@@ -213,7 +213,7 @@ void hourInc(void)
 
   if (interruptTime - lastInterruptTime > 200)
   {
-    printf("Interrupt 1 triggered, %x\n", decCompensation(hours));
+    printf("Interrupt 1 triggered, %x\n", hFormat(decCompensation(hours)));
     //Fetch RTC Time
     //Increase hours by 1, ensuring not to overflow
     //Write hours back to the RTC

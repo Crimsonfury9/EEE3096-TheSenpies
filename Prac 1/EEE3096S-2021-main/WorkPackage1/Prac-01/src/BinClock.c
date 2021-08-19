@@ -88,9 +88,9 @@ int main(void)
 
   //Set random time (3:04PM)
   //You can comment this file out later
-  // wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, 0x13 + TIMEZONE);
-  // wiringPiI2CWriteReg8(RTC, MIN_REGISTER, 0x4);
-  // wiringPiI2CWriteReg8(RTC, SEC_REGISTER, 0x00);
+   wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,hexCompensation((int)getHours()));
+  wiringPiI2CWriteReg8(RTC, MIN_REGISTER, 0x4);
+   wiringPiI2CWriteReg8(RTC, SEC_REGISTER, 0x00);
 
   // Repeat this until we shut down
   for (;;)
@@ -111,7 +111,7 @@ int main(void)
       digitalWrite(LED, LOW);
     }
     // Print out the time we have stored on our RTC
-    printf("The current time is: %d:%d:%d\n", hours, mins, secs);
+    printf("The current time is: %d:%d:%d\n", hFormat(hours), mins, secs);
 
     //using a delay to make our program "less CPU hungry"
     delay(1000); //milliseconds

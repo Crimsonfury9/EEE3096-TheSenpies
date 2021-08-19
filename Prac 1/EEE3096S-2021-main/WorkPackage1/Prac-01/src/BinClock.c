@@ -219,6 +219,7 @@ void hourInc(void)
     //Increase hours by 1, ensuring not to overflow
     //Write hours back to the RTC
     hours = getHours();
+    printf(HOUR_REGISTER)
     int value = hexCompensation(wiringPiI2CReadReg8(RTC, HOUR_REGISTER));
     value = value + 1;
 
@@ -229,7 +230,7 @@ void hourInc(void)
 
     value = decCompensation(value);
     wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, value);
-    printf("Interrupt 1 triggered, %x\n", value);
+    printf("Interrupt 1 triggered, %x\n", hours);
   }
   lastInterruptTime = interruptTime;
 }

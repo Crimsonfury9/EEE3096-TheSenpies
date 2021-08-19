@@ -21,7 +21,7 @@ const char RTCAddr = 0x68;
 const char SEC_REGISTER = 0x00; // see register table in datasheet
 const char MIN_REGISTER = 0x01;
 const char HOUR_REGISTER = 0x02;
-const char TIMEZONE = 2; // +02H00 (RSA)
+const char TIMEZONE = 1; // +01H00
 
 // define pins
 const int LED = 23;

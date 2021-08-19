@@ -91,7 +91,7 @@ int main(void)
   wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, decCompensation(getHours()) + TIMEZONE);
   wiringPiI2CWriteReg8(RTC, MIN_REGISTER, decCompensation(getMins()));
   wiringPiI2CWriteReg8(RTC, SEC_REGISTER, decCompensation(getSecs()));
-  printf("%c\n",HOUR_REGISTER);
+ 
       // Repeat this until we shut down
       for (;;)
   {

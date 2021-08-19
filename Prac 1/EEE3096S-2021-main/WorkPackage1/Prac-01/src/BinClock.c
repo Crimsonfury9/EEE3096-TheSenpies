@@ -88,9 +88,9 @@ int main(void)
 
   //Set random time (3:04PM)
   //You can comment this file out later
-   wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,hexCompensation((int)getHours()));
-  wiringPiI2CWriteReg8(RTC, MIN_REGISTER, 0x4);
-   wiringPiI2CWriteReg8(RTC, SEC_REGISTER, 0x00);
+  wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, hexCompensation((int)getHours()));
+  wiringPiI2CWriteReg8(RTC, MIN_REGISTER, hexCompensation((int)getMins()));
+  wiringPiI2CWriteReg8(RTC, SEC_REGISTER, hexCompensation((int)getSecs()));
 
   // Repeat this until we shut down
   for (;;)

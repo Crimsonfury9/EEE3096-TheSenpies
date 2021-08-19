@@ -91,9 +91,9 @@ int main(void)
   wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, decCompensation(getHours()) + TIMEZONE);
   wiringPiI2CWriteReg8(RTC, MIN_REGISTER, decCompensation(getMins()));
   wiringPiI2CWriteReg8(RTC, SEC_REGISTER, decCompensation(getSecs()));
- 
-      // Repeat this until we shut down
-      for (;;)
+
+  // Repeat this until we shut down
+  for (;;)
   {
     //Fetch the time from the RTC
     //Write your logic here
@@ -213,7 +213,7 @@ void hourInc(void)
 
   if (interruptTime - lastInterruptTime > 200)
   {
-    printf("Interrupt 1 triggered, %x\n", hours);
+    printf("Interrupt 1 triggered, %x\n", hexCompensation(hours));
     //Fetch RTC Time
     //Increase hours by 1, ensuring not to overflow
     //Write hours back to the RTC
@@ -242,7 +242,7 @@ void minInc(void)
 
   if (interruptTime - lastInterruptTime > 200)
   {
-    printf("Interrupt 2 triggered, %x\n", mins);
+    printf("Interrupt 2 triggered, %x\n", hexCompensation(mins));
     //Fetch RTC Time
     //Increase minutes by 1, ensuring not to overflow
     //Write minutes back to the RTC

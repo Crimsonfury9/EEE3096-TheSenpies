@@ -32,8 +32,8 @@ void CleanUp(int sig)
 
   //Set LED to low then input mode
   //Logic here
-  digitalWrite(LED, LOW);
-  pinMode(LED, INPUT);
+  digitalWrite(LED, HIGH);
+  pinMode(LED, OUTPUT);
 
   for (int j = 0; j < sizeof(BTNS) / sizeof(BTNS[0]); j++)
   {

@@ -91,9 +91,9 @@ int main(void)
   wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, hexCompensation(getHours()) + TIMEZONE);
   wiringPiI2CWriteReg8(RTC, MIN_REGISTER, hexCompensation(getMins()));
   wiringPiI2CWriteReg8(RTC, SEC_REGISTER, hexCompensation(getSecs()));
-
-  // Repeat this until we shut down
-  for (;;)
+  printf(HOUR_REGISTER, MIN_REGISTER, SEC_REGISTER)
+      // Repeat this until we shut down
+      for (;;)
   {
     //Fetch the time from the RTC
     //Write your logic here

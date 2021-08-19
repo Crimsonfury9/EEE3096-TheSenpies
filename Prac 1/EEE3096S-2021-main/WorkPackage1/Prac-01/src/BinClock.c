@@ -88,9 +88,9 @@ int main(void)
 
   //Set random time (3:04PM)
   //You can comment this file out later
-  wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, hexCompensation(getHours()) + TIMEZONE);
-  wiringPiI2CWriteReg8(RTC, MIN_REGISTER, hexCompensation(getMins()));
-  wiringPiI2CWriteReg8(RTC, SEC_REGISTER, hexCompensation(getSecs()));
+  wiringPiI2CWriteReg8(RTC, HOUR_REGISTER, decCompensation(getHours()) + TIMEZONE);
+  wiringPiI2CWriteReg8(RTC, MIN_REGISTER, decCompensation(getMins()));
+  wiringPiI2CWriteReg8(RTC, SEC_REGISTER, decCompensation(getSecs()));
   printf("%c\n",HOUR_REGISTER);
       // Repeat this until we shut down
       for (;;)

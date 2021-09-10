@@ -12,9 +12,10 @@ LED_value = [11, 13, 15]
 LED_accuracy = 32
 btn_submit = 16
 btn_increase = 18
-buzzer = None
+buzzer = 33
 eeprom = ES2EEPROMUtils.ES2EEPROM()
-
+buzzPWM = None
+ledPWM = None
 
 # Print the game banner
 def welcome():
@@ -37,8 +38,8 @@ def menu():
     if option == "H":
         os.system('clear')
         print("HIGH SCORES!!")
-        s_count, ss = fetch_scores()
-        display_scores(s_count, ss)
+        score_count, lstScore,lstName  = fetch_scores()
+        display_scores(score_count, lstScore,lstName)
     elif option == "P":
         os.system('clear')
         print("Starting a new round!")
@@ -54,32 +55,74 @@ def menu():
         print("Invalid option. Please select a valid one!")
 
 
-def display_scores(count, raw_data):
+def display_scores(score_count, lstScore,lstName):
     # print the scores to the screen in the expected format
-    print("There are {} scores. Here are the top 3!".format(count))
+    print("There are {score_count} scores. Here are the top 3!".format(score_count))
+    for i in range(1,3):
+        print("{i} - {lstName[i-1]} took {lstScore[i-1]} guesses")
     # print out the scores in the required format
+
     pass
+
+
+def my_Callback():
+    print('Edge detected on channel')
 
 
 # Setup Pins
 def setup():
     # Setup board mode
+    GPIO.setmode(GPIO.BOARD)
     # Setup regular GPIO
+    GPIO.setup(LED_value, GPIO.OUT)
+    GPIO.setup(LED_accuracy,GPIO.OUT)
+    GPIO.setup(buzzer,GPIO.OUT)
+    GPIO.setup(btn_increase,GPIO.IN)
+    GPIO.setup(btn_submit,GPIO.IN)
+    GPIO.output(LED_accuracy,1)
+    GPIO.output(LED_value,0)
+    GPIO.output(buzzer,0)
     # Setup PWM channels
+    buzzPWM = GPIO.PWM(buzzer,1)
+    ledPWM = GPIO.PWM(LED_accuracy,1)
+
     # Setup debouncing and callbacks
+    GPIO.add_event_callback(btn_submit, my_Callback, bouncetime=200)
+    GPIO.add_event_callback(btn_increase, my_Callback, bouncetime=200)
     pass
+
 
 
 # Load high scores
 def fetch_scores():
     # get however many scores there are
-    score_count = None
+    score_count = eeprom.read_block(0,1)
     # Get the scores
-    
-    # convert the codes back to ascii
-    
-    # return back the results
-    return score_count, scores
+    scores = []
+    # convert the codes back to ascii 
+    for i in range(1,score_count+1):
+        temp = eeprom.read_block(i,4)
+        tempArr = [chr(temp[0])+chr(temp[1])+chr(temp[2]),temp[3]]
+        scores.append(tempArr)
+    scoresSorted = sorted(scores,key=lambda x: x[1])
+    # for i in range(1,score_count):
+    #     temp = eeprom.read_block(i,4)
+    #     lstName[i-1] = chr(temp[0])+chr(temp[1])+chr(temp[2])
+    #     lstScore[i-1] = temp[3]
+    # # return back the results
+    # for i in len(lstName):
+    #     for j in len(lstScore):
+    #         if lstScore[i] > lstScore[j]:
+    #             temp1 = lstScore[i]
+    #             lstScore[i] = lstScore[j]
+    #             lstScore[j] = temp1
+
+    #             temp2 = lstName[i]
+    #             lstName[i] = lstName[j]
+    #             lstName[j] = temp2
+
+
+    return score_count, scoresSorted
 
 
 # Save high scores

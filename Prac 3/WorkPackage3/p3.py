@@ -65,7 +65,7 @@ def display_scores():
     print("There are {score_count} scores. Here are the top 3!".format(score_count))
     print(scores)
     for i in range(1,4):
-        print('test')
+        print("test")
         j = i
         Score = scores[i-1]
         Name = Score[0]
@@ -130,6 +130,7 @@ def fetch_scores():
         tempArr = [chr(temp[0])+chr(temp[1])+chr(temp[2]),str(temp[3])]
         scores.append(tempArr)
     scoresSorted = sorted(scores,key=lambda x: x[1])
+    print("exit fetch")
     # for i in range(1,score_count):
     #     temp = eeprom.read_block(i,4)
     #     lstName[i-1] = chr(temp[0])+chr(temp[1])+chr(temp[2])

@@ -205,16 +205,16 @@ def btn_increase_pressed(channel):
     if guess == 9:
         guess = 0
     for i in range(1,guess+1):
-        if i-1 in [1,4,7]:
+        print(i)
+        if i in [1,4,7]:
             GPIO.output(11,GPIO.HIGH)
             sleep(0.5)
             GPIO.output(11,GPIO.LOW)
-        if i-1 in [2,5,8]:
-            
+        if i in [2,5,8]:
             GPIO.output(13,GPIO.HIGH)
             sleep(0.5)
             GPIO.output(13,GPIO.LOW)
-        if i-1 in [3,6]:
+        if i in [3,6]:
             GPIO.output(15,GPIO.HIGH)
             sleep(0.5)
             GPIO.output(15,GPIO.LOW)
@@ -233,7 +233,7 @@ def btn_guess_pressed(channel):
     global guess
     global value
 
-    if buttBounce == 1:
+    if buttBounce == 0:
         GPIO.cleanup()
         menu()
     else:

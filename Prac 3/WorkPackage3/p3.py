@@ -11,8 +11,8 @@ end_of_game = None  # set if the user wins or ends the game
 guess = 0
 buttBounce = 0
 value = 0
-start = None
-end = None
+start = 0
+end = 0
 # DEFINE THE PINS USED HERE
 LED_value = [11, 13, 15]
 LED_accuracy = 32

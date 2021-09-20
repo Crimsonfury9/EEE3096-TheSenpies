@@ -55,9 +55,10 @@ def menu():
         while not end_of_game:
             if GPIO.input(btn_submit) == GPIO.HIGH:
                 btn_guess_pressed(btn_submit)
+                pass
             if GPIO.input(btn_increase) == GPIO.HIGH:    
                 btn_increase_pressed(btn_increase)
-
+                pass
             pass
     elif option == "Q":
         print("Come back soon!")

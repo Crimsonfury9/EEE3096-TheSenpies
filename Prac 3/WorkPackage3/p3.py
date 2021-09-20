@@ -63,7 +63,7 @@ def display_scores():
     # print the scores to the screen in the expected format
     score_count, scores = fetch_scores()
     print("testbeta")
-    print("There are {score_count} scores. Here are the top 3!".format(score_count))
+    print("There are "+str(score_count)+" scores. Here are the top 3!")
     print(scores)
     for i in range(1,4):
         print("test")

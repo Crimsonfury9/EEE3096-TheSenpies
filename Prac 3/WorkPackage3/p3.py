@@ -61,11 +61,11 @@ def menu():
 
 def display_scores():
     # print the scores to the screen in the expected format
-    print("test")
     score_count, scores = fetch_scores()
-    print("test2")
     print("There are {score_count} scores. Here are the top 3!".format(score_count))
+    print(scores)
     for i in range(1,4):
+        print('test')
         j = i
         Score = scores[i-1]
         Name = Score[0]
@@ -126,9 +126,7 @@ def fetch_scores():
     scores = []
     # convert the codes back to ascii 
     for i in range(1,score_count[0]+1):
-        print(i)
         temp = eeprom.read_block(i,4)
-        print(temp)
         tempArr = [chr(temp[0])+chr(temp[1])+chr(temp[2]),str(temp[3])]
         scores.append(tempArr)
     scoresSorted = sorted(scores,key=lambda x: x[1])
@@ -149,7 +147,7 @@ def fetch_scores():
     #             lstName[j] = temp2
 
 
-    return score_count, scoresSorted
+    return score_count[0], scoresSorted
 
 
 # Save high scores

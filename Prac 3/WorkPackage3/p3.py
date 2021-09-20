@@ -195,6 +195,9 @@ def btn_increase_pressed(channel):
     led2 = 0
     led3 = 0
     global guess
+    GPIO.output(LED_value,1)
+    sleep(3)
+    GPIO.output(LED_value,0)
     guess = guess+1
     if guess == 9:
         guess = 0

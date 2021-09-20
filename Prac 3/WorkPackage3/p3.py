@@ -88,9 +88,6 @@ def my_callback(channel):
     global buttBounce
     start_time = time.time()
 
-    while GPIO.input(channel) == 0: 
-        pass
-
     buttonTime = time.time() - start_time    
 
     if buttonTime >= 4:
@@ -193,9 +190,6 @@ def generate_number():
 
 # Increase button pressed
 def btn_increase_pressed(channel):
-    led1 = 0
-    led2 = 0
-    led3 = 0
     global guess
     GPIO.output(LED_value,1)
     sleep(1)

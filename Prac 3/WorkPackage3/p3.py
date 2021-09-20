@@ -126,7 +126,7 @@ def fetch_scores():
     # Get the scores
     scores = []
     # convert the codes back to ascii 
-    for i in range(1,score_count+1):
+    for i in range(1,score_count(0)+1):
         temp = eeprom.read_block(i,4)
         print(temp)
         tempArr = [chr(temp[0])+chr(temp[1])+chr(temp[2]),str(temp[3])]

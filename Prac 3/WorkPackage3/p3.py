@@ -118,15 +118,15 @@ def setup():
     GPIO.setup(buzzer,GPIO.OUT)
     GPIO.setup(btn_increase,GPIO.IN)
     GPIO.setup(btn_submit,GPIO.IN)
-    GPIO.output(LED_accuracy,1)
-    GPIO.output(LED_value,1)
-    GPIO.output(buzzer,1)
+    GPIO.output(LED_accuracy,0)
+    GPIO.output(LED_value,0)
+    GPIO.output(buzzer,0)
     # Setup PWM channels
     buzzPWM = GPIO.PWM(buzzer,1)
     ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
-    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=my_callback, bouncetime=500)
+    GPIO.add_event_detect(btn_increase, GPIO.RISING, callback=my_callback, bouncetime=500)
     GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=my_callback, bouncetime=500)
     pass
 

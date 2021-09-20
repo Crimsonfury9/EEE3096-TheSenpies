@@ -117,7 +117,7 @@ def setup():
     ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
-    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=btn_increase_pressed, bouncetime=100)
+    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=btn_increase_pressed, bouncetime=800)
     GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=btn_guess_pressed, bouncetime=200)
     pass
 

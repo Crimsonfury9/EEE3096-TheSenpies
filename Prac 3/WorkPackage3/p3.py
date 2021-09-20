@@ -119,8 +119,8 @@ def setup():
     GPIO.setup(btn_increase,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
     GPIO.setup(btn_submit,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
     GPIO.output(LED_accuracy,1)
-    GPIO.output(LED_value,0)
-    GPIO.output(buzzer,0)
+    GPIO.output(LED_value,1)
+    GPIO.output(buzzer,1)
     # Setup PWM channels
     buzzPWM = GPIO.PWM(buzzer,1)
     ledPWM = GPIO.PWM(LED_accuracy,1)

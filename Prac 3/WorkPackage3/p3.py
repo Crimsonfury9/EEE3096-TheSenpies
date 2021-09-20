@@ -206,7 +206,6 @@ def btn_increase_pressed(channel):
     if guess == 9:
         guess = 0
     for i in range(1,guess+1):
-        print(i)
         if i in [1,4,7]:
             GPIO.output(11,GPIO.HIGH)
             sleep(0.5)
@@ -219,7 +218,6 @@ def btn_increase_pressed(channel):
             GPIO.output(15,GPIO.HIGH)
             sleep(0.5)
             GPIO.output(15,GPIO.LOW)
-        sleep(3)
         
     # Increase the value shown on the LEDs
     # You can choose to have a global variable store the user's current guess, 

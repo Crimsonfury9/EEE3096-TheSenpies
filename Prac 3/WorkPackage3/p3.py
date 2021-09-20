@@ -51,7 +51,7 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         while not end_of_game:
-            
+
             btn_guess_pressed(btn_submit)
             btn_increase_pressed(btn_increase)
 
@@ -180,28 +180,28 @@ def btn_increase_pressed(channel):
     led1 = 0
     led2 = 0
     led3 = 0
-    while True:
-        if GPIO.input(channel) == GPIO.HIGH:
-            guess = guess+1
-            if guess == 9:
-                guess = 0
-        for i in range(1,guess+1):
-            if i in [1,4,7]:
-                for j in range(1,floor(i/2)+1):
-                    GPIO.output(11,GPIO.HIGH)
-                    sleep(1)
-                    GPIO.output(11,GPIO.LOW)
-            if i in [2,5,8]:
-                for j in range(1,floor(i/2)+1):
-                    GPIO.output(13,GPIO.HIGH)
-                    sleep(1)
-                    GPIO.output(13,GPIO.LOW)
-            if i in [3,6]:
-                for j in range(1,floor(i/2)+1):
-                    GPIO.output(15,GPIO.HIGH)
-                    sleep(1)
-                    GPIO.output(15,GPIO.LOW)
-            sleep(3)
+    global guess
+    if GPIO.input(channel) == GPIO.HIGH:
+        guess = guess+1
+        if guess == 9:
+            guess = 0
+    for i in range(1,guess+1):
+        if i in [1,4,7]:
+            for j in range(1,floor(i/2)+1):
+                GPIO.output(11,GPIO.HIGH)
+                sleep(1)
+                GPIO.output(11,GPIO.LOW)
+        if i in [2,5,8]:
+            for j in range(1,floor(i/2)+1):
+                GPIO.output(13,GPIO.HIGH)
+                sleep(1)
+                GPIO.output(13,GPIO.LOW)
+        if i in [3,6]:
+            for j in range(1,floor(i/2)+1):
+                GPIO.output(15,GPIO.HIGH)
+                sleep(1)
+                GPIO.output(15,GPIO.LOW)
+        sleep(3)
         
     # Increase the value shown on the LEDs
     # You can choose to have a global variable store the user's current guess, 
@@ -213,31 +213,29 @@ def btn_increase_pressed(channel):
 def btn_guess_pressed(channel):
     # If they've pressed and held the button, clear up the GPIO and take them back to the menu screen
     numGuesses=0
-    while True:
-        if GPIO.input(channel) == GPIO.HIGH:
-            if buttBounce == 1:
-                GPIO.cleanup()
-                menu()
-            else:
-                if guess == value:
-                    GPIO.output(LED_accuracy,GPIO.LOW)
-                    GPIO.output(LED_value,GPIO.LOW)
-                    GPIO.output(buzzer,GPIO.LOW)
-                    buzzPWM.stop()
-                    ledPWM.stop()
-                    Name = input("Impressive! Let's add you to our hall of fame, what's your Name? (Three Characters only)")
-                    if len(Name) != 3:
-                        while len(Name) != 3:
-                            Name = input("Sorry your name isn't of sufficient lenght, please re-enter!(Three Characters only)")
+    if buttBounce == 1:
+        GPIO.cleanup()
+        menu()
+    else:
+        if guess == value:
+            GPIO.output(LED_accuracy,GPIO.LOW)
+            GPIO.output(LED_value,GPIO.LOW)
+            GPIO.output(buzzer,GPIO.LOW)
+            buzzPWM.stop()
+            ledPWM.stop()
+            Name = input("Impressive! Let's add you to our hall of fame, what's your Name? (Three Characters only)")
+            if len(Name) != 3:
+                while len(Name) != 3:
+                        Name = input("Sorry your name isn't of sufficient lenght, please re-enter!(Three Characters only)")
                     
-                    save_scores(Name,numGuesses)
-                    menu()
-                elif guess <= value+3 and guess >=value-3 and guess != value:
-                    print("You're really close! Try again!")
-                    trigger_buzzer()
-                    accuracy_leds()
-                else:
-                    print("Sorry you're way off! Try again!")
+            save_scores(Name,numGuesses)
+            menu()
+        elif guess <= value+3 and guess >=value-3 and guess != value:
+            print("You're really close! Try again!")
+            trigger_buzzer()
+            accuracy_leds()
+        else:
+            print("Sorry you're way off! Try again!")
                     
                             
     # Compare the actual value with the user value displayed on the LEDs

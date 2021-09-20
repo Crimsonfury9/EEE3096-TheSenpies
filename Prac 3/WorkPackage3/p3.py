@@ -160,7 +160,7 @@ def save_scores(name,points):
     # update total amount of scores
     score_count = score_count+1
     # write new scores
-    eeprom.write_block(0,1) = score_count
+    eeprom.write_block(0,[score_count,0,0,0])
     for i in range(1,score_count+1):
         tempArr = [ord(name[0])+ord(name[1])+ord(name[2]),points]
         eeprom.write_block(i,tempArr)

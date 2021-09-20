@@ -11,8 +11,6 @@ end_of_game = None  # set if the user wins or ends the game
 guess = 0
 buttBounce = 0
 value = 0
-start = 0
-end = 0
 # DEFINE THE PINS USED HERE
 LED_value = [11, 13, 15]
 LED_accuracy = 32
@@ -77,19 +75,19 @@ def display_scores():
     pass
 
 
-def my_Callback(channel):
-    global start
-    global end
-    if GPIO.input(channel) == 1:
-        start = time.time()
-    if GPIO.input(channel) == 0:
-        end = time.time()
-        elapsed = end - start
-        print(elapsed)
-    if elapsed >= 3:
+def my_callback(channel):
+    global buttonStatus
+    start_time = time.time()
+
+    while GPIO.input(channel) == 0: 
+        pass
+
+    buttonTime = time.time() - start_time    
+
+    if buttonTime >= 4:
+        buttBounce = 0 
+    elif buttonTime >= .1: 
         buttBounce = 1
-    else:
-        buttBounce = 0
 
 
 
@@ -100,11 +98,11 @@ def setup():
     # Setup board mode
     GPIO.setmode(GPIO.BOARD)
     # Setup regular GPIO
-    GPIO.setup(LED_value, GPIO.OUT)
-    GPIO.setup(LED_accuracy,GPIO.OUT)
-    GPIO.setup(buzzer,GPIO.OUT)
-    GPIO.setup(btn_increase,GPIO.IN)
-    GPIO.setup(btn_submit,GPIO.IN)
+    GPIO.setup(LED_value, GPIO.OUT,initial = GPIO.LOW)
+    GPIO.setup(LED_accuracy,GPIO.OUT,initial = GPIO.LOW)
+    GPIO.setup(buzzer,GPIO.OUT,initial = GPIO.LOW)
+    GPIO.setup(btn_increase,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
+    GPIO.setup(btn_submit,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
     GPIO.output(LED_accuracy,1)
     GPIO.output(LED_value,0)
     GPIO.output(buzzer,0)
@@ -113,8 +111,8 @@ def setup():
     ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
-    GPIO.add_event_callback(btn_submit, callback =my_Callback(btn_submit), bouncetime=200)
-    GPIO.add_event_callback(btn_increase, callback =my_Callback(btn_increase), bouncetime=200)
+    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=my_callback, bouncetime=500)
+    GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=my_callback, bouncetime=500)
     pass
 
 

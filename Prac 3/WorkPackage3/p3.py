@@ -122,9 +122,8 @@ def setup():
 def fetch_scores():
     # get however many scores there are
     score_count = eeprom.read_block(0,1)
-    print(score_count)
     # Get the scores
-    scores = []
+    scores = None
     # convert the codes back to ascii 
     for i in range(1,score_count(0)+1):
         temp = eeprom.read_block(i,4)

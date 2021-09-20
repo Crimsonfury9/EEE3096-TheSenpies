@@ -51,9 +51,10 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         while not end_of_game:
-
-            btn_guess_pressed(btn_submit)
-            btn_increase_pressed(btn_increase)
+            if GPIO.input(btn_submit) == GPIO.HIGH:
+                btn_guess_pressed(btn_submit)
+            if GPIO.input(btn_increase) == GPIO.HIGH:    
+                btn_increase_pressed(btn_increase)
 
             pass
     elif option == "Q":
@@ -191,10 +192,9 @@ def btn_increase_pressed(channel):
     led2 = 0
     led3 = 0
     global guess
-    if GPIO.input(channel) == GPIO.HIGH:
-        guess = guess+1
-        if guess == 9:
-            guess = 0
+    guess = guess+1
+    if guess == 9:
+        guess = 0
     for i in range(1,guess+1):
         if i in [1,4,7]:
             for j in range(1,floor(i/2)+1):

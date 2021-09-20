@@ -21,7 +21,7 @@ eeprom = ES2EEPROMUtils.ES2EEPROM()
 buzzPWM = None
 ledPWM = None
 numGuesses = 0
-
+Truth = True
 # Print the game banner
 def welcome():
     os.system('clear')
@@ -40,6 +40,7 @@ def menu():
     global end_of_game
     global btn_increase
     global btn_submit
+    global Truth
     option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
     option = option.upper()
     if option == "H":
@@ -52,15 +53,8 @@ def menu():
         print("Use the buttons on the Pi to make and submit your guess!")
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
+        Truth = False
         while not end_of_game:
-            if GPIO.input(btn_submit) == GPIO.LOW:
-                print("guess")
-                btn_guess_pressed(btn_submit)
-                
-            if GPIO.input(btn_increase) == GPIO.LOW:    
-                print("increase")
-                btn_increase_pressed(btn_increase)
-                
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -84,16 +78,13 @@ def display_scores():
     pass
 
 
-def my_callback(channel):
-    global buttBounce
-    start_time = time.time()
+def start():
+    global buttonHold
+    buttonHold = time.time()
 
-    buttonTime = time.time() - start_time    
-
-    if buttonTime >= 4:
-        buttBounce = 0 
-    elif buttonTime >= .1: 
-        buttBounce = 1
+def stop():
+    global buttonHold
+    return time.time() - buttonHold   
 
 
 
@@ -126,8 +117,8 @@ def setup():
     ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
-    GPIO.add_event_detect(btn_increase, GPIO.RISING, callback=my_callback, bouncetime=500)
-    GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=my_callback, bouncetime=500)
+    GPIO.add_event_detect(btn_increase, GPIO.RISING, callback=btn_increase_pressed, bouncetime=500)
+    GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     pass
 
 
@@ -225,30 +216,39 @@ def btn_guess_pressed(channel):
     global numGuesses
     global guess
     global value
-
-    if buttBounce == 0:
-        GPIO.cleanup()
-        menu()
-    else:
-        if guess == value:
-            GPIO.output(LED_accuracy,GPIO.LOW)
-            GPIO.output(LED_value,GPIO.LOW)
-            GPIO.output(buzzer,GPIO.LOW)
-            buzzPWM.stop()
-            ledPWM.stop()
-            Name = input("Impressive! Let's add you to our hall of fame, what's your Name? (Three Characters only)")
-            if len(Name) != 3:
-                while len(Name) != 3:
-                        Name = input("Sorry your name isn't of sufficient lenght, please re-enter!(Three Characters only)")
-                    
-            save_scores(Name,numGuesses)
+    global Truth
+    start()
+    while (GPIO.input(channel)==0):
+        sleep(0.05)
+    if Truth == False:
+        holdCheck = stop()
+        if holdCheck >=2:
             end_of_game = True
-        elif guess <= value+3 and guess >=value-3 and guess != value:
-            print("You're really close! Try again!")
-            trigger_buzzer()
-            accuracy_leds()
+            menu()
+            guess=0         
+            ledPWM.ChangeDutyCycle(0)
+            buzzPWM.ChangeDutyCycle(0)
+            GPIO.output(LED_value, 0)
         else:
-            print("Sorry you're way off! Try again!")
+            if guess == value:
+                GPIO.output(LED_accuracy,GPIO.LOW)
+                GPIO.output(LED_value,GPIO.LOW)
+                GPIO.output(buzzer,GPIO.LOW)
+                buzzPWM.stop()
+                ledPWM.stop()
+                Name = input("Impressive! Let's add you to our hall of fame, what's your Name? (Three Characters only)")
+                if len(Name) != 3:
+                    while len(Name) != 3:
+                            Name = input("Sorry your name isn't of sufficient lenght, please re-enter!(Three Characters only)")
+                    
+                save_scores(Name,numGuesses)
+                end_of_game = True
+            elif guess <= value+3 and guess >=value-3:
+                print("You're really close! Try again!")
+                trigger_buzzer()
+                accuracy_leds()
+            else:
+                print("Sorry you're way off! Try again!")
                     
                             
     # Compare the actual value with the user value displayed on the LEDs

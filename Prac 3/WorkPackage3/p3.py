@@ -100,9 +100,9 @@ def setup():
     # Setup board mode
     GPIO.setmode(GPIO.BOARD)
     # Setup regular GPIO
-    GPIO.setup(LED_value, GPIO.OUT,initial = GPIO.LOW)
-    GPIO.setup(LED_accuracy,GPIO.OUT,initial = GPIO.LOW)
-    GPIO.setup(buzzer,GPIO.OUT,initial = GPIO.LOW)
+    GPIO.setup(LED_value, GPIO.OUT)
+    GPIO.setup(LED_accuracy,GPIO.OUT)
+    GPIO.setup(buzzer,GPIO.OUT)
     GPIO.setup(btn_increase,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
     GPIO.setup(btn_submit,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
     GPIO.output(LED_accuracy,1)

@@ -123,7 +123,7 @@ def fetch_scores():
     # get however many scores there are
     score_count = eeprom.read_block(0,1)
     # Get the scores
-    scores = None
+    scores = []
     # convert the codes back to ascii 
     for i in range(1,score_count[0]+1):
         print(i)

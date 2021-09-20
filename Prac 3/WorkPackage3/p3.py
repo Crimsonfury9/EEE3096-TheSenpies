@@ -118,7 +118,7 @@ def setup():
     ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
-    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=btn_increase_pressed, bouncetime=50)
+    GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=btn_increase_pressed, bouncetime=200)
     GPIO.add_event_detect(btn_submit, GPIO.FALLING, callback=btn_guess_pressed, bouncetime=200)
     pass
 
@@ -176,8 +176,7 @@ def save_scores(name,points):
 
 # Generate guess number
 def generate_number():
-   # return random.randint(0, pow(2, 3)-1)
-   return 5
+    return random.randint(0, pow(2, 3)-1)
 
 
 # Increase button pressed

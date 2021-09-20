@@ -61,8 +61,9 @@ def menu():
 
 def display_scores():
     # print the scores to the screen in the expected format
+    print("test")
     score_count, scores = fetch_scores()
-
+    print("test2")
     print("There are {score_count} scores. Here are the top 3!".format(score_count))
     for i in range(1,4):
         j = i

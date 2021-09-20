@@ -18,9 +18,9 @@ btn_submit = 16
 btn_increase = 18
 buzzer = 33
 eeprom = ES2EEPROMUtils.ES2EEPROM()
-buzzPWM = GPIO.PWM(buzzer,1)
-ledPWM = GPIO.PWM(LED_accuracy,1)
-
+buzzPWM = None
+ledPWM = None
+numGuesses = 0
 
 # Print the game banner
 def welcome():
@@ -79,7 +79,7 @@ def display_scores():
 
 
 def my_callback(channel):
-    global buttonStatus
+    global buttBounce
     start_time = time.time()
 
     while GPIO.input(channel) == 0: 
@@ -96,6 +96,15 @@ def my_callback(channel):
 
 # Setup Pins
 def setup():
+    global buzzPWM
+    global ledPWM
+    global LED_accuracy
+    global LED_value
+    global btn_increase
+    global btn_submit
+    global buzzer
+
+
     eeprom.clear(2048)
     eeprom.populate_mock_scores()
     # Setup board mode
@@ -110,7 +119,8 @@ def setup():
     GPIO.output(LED_value,0)
     GPIO.output(buzzer,0)
     # Setup PWM channels
-
+    buzzPWM = GPIO.PWM(buzzer,1)
+    ledPWM = GPIO.PWM(LED_accuracy,1)
 
     # Setup debouncing and callbacks
     GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=my_callback, bouncetime=500)
@@ -171,7 +181,8 @@ def save_scores(name,points):
 
 # Generate guess number
 def generate_number():
-    return random.randint(0, pow(2, 3)-1)
+   # return random.randint(0, pow(2, 3)-1)
+   return 5
 
 
 # Increase button pressed
@@ -211,7 +222,10 @@ def btn_increase_pressed(channel):
 # Guess button
 def btn_guess_pressed(channel):
     # If they've pressed and held the button, clear up the GPIO and take them back to the menu screen
-    numGuesses=0
+    global numGuesses
+    global guess
+    global value
+
     if buttBounce == 1:
         GPIO.cleanup()
         menu()
@@ -252,6 +266,9 @@ def btn_guess_pressed(channel):
 
 # LED Brightness
 def accuracy_leds():
+    global guess
+    global value
+    global ledPWM
     # Set the brightness of the LED based on how close the guess is to the answer
     ledPWM.start(0)
     if guess > value:
@@ -265,6 +282,9 @@ def accuracy_leds():
 
 # Sound Buzzer
 def trigger_buzzer():
+    global buzzPWM
+    global guess
+    global value
     # The buzzer operates differently from the LED
     # While we want the brightness of the LED to change(duty cycle), we want the frequency of the buzzer to change
     # The buzzer duty cycle should be left at 50%

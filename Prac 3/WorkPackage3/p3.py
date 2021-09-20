@@ -51,6 +51,10 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         while not end_of_game:
+            
+            btn_guess_pressed(btn_submit)
+            btn_increase_pressed(btn_increase)
+
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -62,11 +66,8 @@ def menu():
 def display_scores():
     # print the scores to the screen in the expected format
     score_count, scores = fetch_scores()
-    print("testbeta")
     print("There are "+str(score_count)+" scores. Here are the top 3!")
-    print(scores)
     for i in range(1,4):
-        print("test")
         j = i
         Score = scores[i-1]
         Name = Score[0]
@@ -131,9 +132,6 @@ def fetch_scores():
         tempArr = [chr(temp[0])+chr(temp[1])+chr(temp[2]),str(temp[3])]
         scores.append(tempArr)
     scoresSorted = sorted(scores,key=lambda x: x[1])
-    print(score_count)
-    print("sdad")
-    print(scoresSorted)
     # for i in range(1,score_count):
     #     temp = eeprom.read_block(i,4)
     #     lstName[i-1] = chr(temp[0])+chr(temp[1])+chr(temp[2])

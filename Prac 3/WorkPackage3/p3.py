@@ -230,6 +230,8 @@ def btn_guess_pressed(channel):
             buzzPWM.ChangeDutyCycle(0)
             GPIO.output(LED_value, 0)
         else:
+            print(guess)
+            print(value)
             if guess == value:
                 GPIO.output(LED_accuracy,GPIO.LOW)
                 GPIO.output(LED_value,GPIO.LOW)

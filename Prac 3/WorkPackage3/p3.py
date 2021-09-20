@@ -8,7 +8,11 @@ import time
 from time import sleep
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
-
+guess = 0
+buttBounce = 0
+value = 0
+start = None
+end = None
 # DEFINE THE PINS USED HERE
 LED_value = [11, 13, 15]
 LED_accuracy = 32
@@ -18,11 +22,7 @@ buzzer = 33
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 buzzPWM = None
 ledPWM = None
-guess = 0
-buttBounce = 0
-value = 0
-start = None
-end = None
+
 
 # Print the game banner
 def welcome():
@@ -78,6 +78,8 @@ def display_scores():
 
 
 def my_Callback(channel):
+    global start
+    global end
     if GPIO.input(channel) == 1:
         start = time.time()
     if GPIO.input(channel) == 0:

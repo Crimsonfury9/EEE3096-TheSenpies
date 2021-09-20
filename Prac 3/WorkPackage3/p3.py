@@ -38,6 +38,8 @@ def welcome():
 # Print the game menu
 def menu():
     global end_of_game
+    global btn_increase
+    global btn_submit
     option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
     option = option.upper()
     if option == "H":

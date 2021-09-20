@@ -200,6 +200,7 @@ def btn_increase_pressed(channel):
     GPIO.output(LED_value,1)
     sleep(1)
     GPIO.output(LED_value,0)
+    sleep(1)
     guess = guess+1
     print(guess)
     if guess == 9:

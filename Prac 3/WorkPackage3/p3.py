@@ -163,7 +163,7 @@ def save_scores(name,points):
     # include new score
     scores.append([name,points])
     # sort
-    scoresSorted = sorted(scores,key=lambda x: x[1])
+    scores.sort(key=lambda x: x[1])
     # update total amount of scores
     score_count = score_count+1
     # write new scores

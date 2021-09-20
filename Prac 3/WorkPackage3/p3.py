@@ -18,8 +18,8 @@ btn_submit = 16
 btn_increase = 18
 buzzer = 33
 eeprom = ES2EEPROMUtils.ES2EEPROM()
-buzzPWM = None
-ledPWM = None
+buzzPWM = GPIO.PWM(buzzer,1)
+ledPWM = GPIO.PWM(LED_accuracy,1)
 
 
 # Print the game banner
@@ -110,8 +110,7 @@ def setup():
     GPIO.output(LED_value,0)
     GPIO.output(buzzer,0)
     # Setup PWM channels
-    buzzPWM = GPIO.PWM(buzzer,1)
-    ledPWM = GPIO.PWM(LED_accuracy,1)
+
 
     # Setup debouncing and callbacks
     GPIO.add_event_detect(btn_increase, GPIO.FALLING, callback=my_callback, bouncetime=500)

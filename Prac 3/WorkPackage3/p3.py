@@ -41,6 +41,7 @@ def menu():
     global btn_increase
     global btn_submit
     global Truth
+    global value
     option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
     option = option.upper()
     if option == "H":

@@ -244,7 +244,7 @@ def btn_guess_pressed(channel):
                         Name = input("Sorry your name isn't of sufficient lenght, please re-enter!(Three Characters only)")
                     
             save_scores(Name,numGuesses)
-            menu()
+            end_of_game = True
         elif guess <= value+3 and guess >=value-3 and guess != value:
             print("You're really close! Try again!")
             trigger_buzzer()

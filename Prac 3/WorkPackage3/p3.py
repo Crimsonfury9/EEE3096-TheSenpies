@@ -54,9 +54,13 @@ def menu():
         value = generate_number()
         while not end_of_game:
             if GPIO.input(btn_submit) == GPIO.HIGH:
+                print("guess")
                 btn_guess_pressed(btn_submit)
+                
             if GPIO.input(btn_increase) == GPIO.HIGH:    
+                print("increase")
                 btn_increase_pressed(btn_increase)
+                
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -115,8 +119,8 @@ def setup():
     GPIO.setup(LED_value, GPIO.OUT)
     GPIO.setup(LED_accuracy,GPIO.OUT)
     GPIO.setup(buzzer,GPIO.OUT)
-    GPIO.setup(btn_increase,GPIO.IN,GPIO.LOW)
-    GPIO.setup(btn_submit,GPIO.IN,GPIO.LOW)
+    GPIO.setup(btn_increase,GPIO.IN,GPIO.PUD_DOWN)
+    GPIO.setup(btn_submit,GPIO.IN,GPIO.PUD_DOWN)
     GPIO.output(LED_accuracy,0)
     GPIO.output(LED_value,0)
     GPIO.output(buzzer,0)

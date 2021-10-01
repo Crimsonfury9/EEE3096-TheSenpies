@@ -1,4 +1,5 @@
 # Import libraries
+from math import floor
 import RPi.GPIO as GPIO
 import random
 import ES2EEPROMUtils
@@ -179,16 +180,20 @@ def btn_increase_pressed(channel):
             
             
         # Increase the value shown on the LEDs
-        a=bin(guess).replace("0b","00")
-        a=a[::-1]
-    
-        # print(int(a[0]))
-        # print(int(a[1]))
-        # print(int(a[2]))
-        GPIO.output(LED_value, (int(a[0]),int(a[1]),int(a[2]))) 
-        # You can choose to have a global variable store the user's current guess, 
-        # or just pull the value off the LEDs when a user makes a guess
-        time.sleep(0.1)
+        for i in range(1,guess+1):
+            if i in [1,4,7]:
+                GPIO.output(11,GPIO.HIGH)
+                sleep(0.5)
+                GPIO.output(11,GPIO.LOW)
+            elif i in [2,5,8]:
+                GPIO.output(13,GPIO.HIGH)
+                sleep(0.5)
+                GPIO.output(13,GPIO.LOW)
+            elif i in [3,6]:
+                GPIO.output(15,GPIO.HIGH)
+                sleep(0.5)
+                GPIO.output(15,GPIO.LOW)
+        
 
 def start():
     global buttonHold
